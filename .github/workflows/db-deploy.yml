@@ -1,0 +1,83 @@
+name: "Database CD - Deploy & Automated Rollback"
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "changelog/**"
+      - "config/**"
+      - "scripts/**"
+      - ".github/workflows/db-deploy.yml"
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Acción de base de datos a ejecutar"
+        required: true
+        default: "update"
+        type: choice
+        options:
+          - update
+          - rollback-last
+
+jobs:
+  deploy-database:
+    name: "Deploy Database Migrations"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout Code"
+        uses: actions/checkout@v4
+
+      - name: "Tag Pre-deployment Checkpoint"
+        if: "${{ github.event.inputs.action != 'rollback-last' }}"
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}/changelog:/liquibase/changelog" \
+            -v "${{ github.workspace }}/config:/liquibase/config" \
+            liquibase/liquibase:4.27-alpine \
+            --url="jdbc:postgresql://${{ secrets.DB_HOST }}:${{ secrets.DB_PORT || '5432' }}/${{ secrets.DB_NAME }}" \
+            --username="${{ secrets.DB_USER }}" \
+            --password="${{ secrets.DB_PASSWORD }}" \
+            --changelog-file="/liquibase/changelog/db.changelog-master.yaml" \
+            tag "release-${{ github.sha }}"
+
+      - name: "Execute Liquibase Update"
+        if: "${{ github.event.inputs.action != 'rollback-last' }}"
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}/changelog:/liquibase/changelog" \
+            -v "${{ github.workspace }}/config:/liquibase/config" \
+            liquibase/liquibase:4.27-alpine \
+            --url="jdbc:postgresql://${{ secrets.DB_HOST }}:${{ secrets.DB_PORT || '5432' }}/${{ secrets.DB_NAME }}" \
+            --username="${{ secrets.DB_USER }}" \
+            --password="${{ secrets.DB_PASSWORD }}" \
+            --changelog-file="/liquibase/changelog/db.changelog-master.yaml" \
+            update
+
+      - name: "Automated Rollback on Failure"
+        if: failure() && github.event.inputs.action != 'rollback-last'
+        run: |
+          echo "⚠️ Error detectado durante el despliegue. Ejecutando Rollback automático al checkpoint release-${{ github.sha }}..."
+          docker run --rm \
+            -v "${{ github.workspace }}/changelog:/liquibase/changelog" \
+            -v "${{ github.workspace }}/config:/liquibase/config" \
+            liquibase/liquibase:4.27-alpine \
+            --url="jdbc:postgresql://${{ secrets.DB_HOST }}:${{ secrets.DB_PORT || '5432' }}/${{ secrets.DB_NAME }}" \
+            --username="${{ secrets.DB_USER }}" \
+            --password="${{ secrets.DB_PASSWORD }}" \
+            --changelog-file="/liquibase/changelog/db.changelog-master.yaml" \
+            rollback "release-${{ github.sha }}"
+
+      - name: "Manual Rollback (If Selected in Dispatch)"
+        if: "${{ github.event.inputs.action == 'rollback-last' }}"
+        run: |
+          echo "Ejecutando Rollback manual del último changeset..."
+          docker run --rm \
+            -v "${{ github.workspace }}/changelog:/liquibase/changelog" \
+            -v "${{ github.workspace }}/config:/liquibase/config" \
+            liquibase/liquibase:4.27-alpine \
+            --url="jdbc:postgresql://${{ secrets.DB_HOST }}:${{ secrets.DB_PORT || '5432' }}/${{ secrets.DB_NAME }}" \
+            --username="${{ secrets.DB_USER }}" \
+            --password="${{ secrets.DB_PASSWORD }}" \
+            --changelog-file="/liquibase/changelog/db.changelog-master.yaml" \
+            rollback-count 1

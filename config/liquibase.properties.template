@@ -1,0 +1,9 @@
+# Luminia Database Migration Configuration
+# Copiar a liquibase.properties y configurar las credenciales locales/remotas
+
+changeLogFile=changelog/db.changelog-master.yaml
+driver=org.postgresql.Driver
+url=jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:luminia_db}
+username=${DB_USER:postgres}
+password=${DB_PASSWORD:postgres}
+logLevel=INFO
