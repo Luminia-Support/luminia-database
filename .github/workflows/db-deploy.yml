@@ -38,7 +38,8 @@ jobs:
             --url="jdbc:postgresql://${{ secrets.DB_HOST }}:${{ secrets.DB_PORT || '5432' }}/${{ secrets.DB_NAME }}" \
             --username="${{ secrets.DB_USER }}" \
             --password="${{ secrets.DB_PASSWORD }}" \
-            --changelog-file="/liquibase/changelog/db.changelog-master.yaml" \
+            --search-path="/liquibase/changelog" \
+            --changelog-file="db.changelog-master.yaml" \
             tag "release-${{ github.sha }}"
 
       - name: "Execute Liquibase Update"
@@ -51,7 +52,8 @@ jobs:
             --url="jdbc:postgresql://${{ secrets.DB_HOST }}:${{ secrets.DB_PORT || '5432' }}/${{ secrets.DB_NAME }}" \
             --username="${{ secrets.DB_USER }}" \
             --password="${{ secrets.DB_PASSWORD }}" \
-            --changelog-file="/liquibase/changelog/db.changelog-master.yaml" \
+            --search-path="/liquibase/changelog" \
+            --changelog-file="db.changelog-master.yaml" \
             update
 
       - name: "Automated Rollback on Failure"
@@ -65,7 +67,8 @@ jobs:
             --url="jdbc:postgresql://${{ secrets.DB_HOST }}:${{ secrets.DB_PORT || '5432' }}/${{ secrets.DB_NAME }}" \
             --username="${{ secrets.DB_USER }}" \
             --password="${{ secrets.DB_PASSWORD }}" \
-            --changelog-file="/liquibase/changelog/db.changelog-master.yaml" \
+            --search-path="/liquibase/changelog" \
+            --changelog-file="db.changelog-master.yaml" \
             rollback "release-${{ github.sha }}"
 
       - name: "Manual Rollback (If Selected in Dispatch)"
@@ -79,5 +82,6 @@ jobs:
             --url="jdbc:postgresql://${{ secrets.DB_HOST }}:${{ secrets.DB_PORT || '5432' }}/${{ secrets.DB_NAME }}" \
             --username="${{ secrets.DB_USER }}" \
             --password="${{ secrets.DB_PASSWORD }}" \
-            --changelog-file="/liquibase/changelog/db.changelog-master.yaml" \
+            --search-path="/liquibase/changelog" \
+            --changelog-file="db.changelog-master.yaml" \
             rollback-count 1
