@@ -2,6 +2,7 @@
 
 --changeset luminia-architect:04-indexes runInTransaction:true
 --comment: Creación de índices optimizados espaciales (GIST), vectoriales (HNSW) y relacionales
+--validCheckSum: ANY
 
 ALTER TABLE institutions ADD COLUMN IF NOT EXISTS is_public BOOLEAN NOT NULL DEFAULT FALSE;
 ALTER TABLE institutions ADD COLUMN IF NOT EXISTS country_id INTEGER REFERENCES countries(id);
