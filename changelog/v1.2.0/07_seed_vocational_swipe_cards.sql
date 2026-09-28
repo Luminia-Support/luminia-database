@@ -27,4 +27,4 @@ VALUES
     ('c1111111-1111-1111-1111-111111111120', 'Organizar y digitalizar el archivo histórico de una biblioteca nacional para que no se pierdan documentos de 200 años', 'C', 'S', 'Bóveda de archivo histórico', 'Archive', TRUE)
 ON CONFLICT (id) DO NOTHING;
 
---rollback DELETE FROM vocational_swipe_cards WHERE id LIKE 'c1111111-1111-1111-1111-1111111111%';
+--rollback DELETE FROM vocational_swipe_cards WHERE id::text LIKE 'c1111111-1111-1111-1111-1111111111%';
