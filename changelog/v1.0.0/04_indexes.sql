@@ -3,6 +3,12 @@
 --changeset luminia-architect:04-indexes runInTransaction:true
 --comment: Creación de índices optimizados espaciales (GIST), vectoriales (HNSW) y relacionales
 
+ALTER TABLE institutions ADD COLUMN IF NOT EXISTS is_public BOOLEAN NOT NULL DEFAULT FALSE;
+ALTER TABLE institutions ADD COLUMN IF NOT EXISTS country_id INTEGER REFERENCES countries(id);
+ALTER TABLE institutions ADD COLUMN IF NOT EXISTS tier_level INTEGER NOT NULL DEFAULT 0;
+
+ALTER TABLE educational_pathways ADD COLUMN IF NOT EXISTS campus_id INTEGER REFERENCES campuses(id);
+
 CREATE INDEX IF NOT EXISTS idx_family_relationships_parent_id ON family_relationships(parent_id);
 CREATE INDEX IF NOT EXISTS idx_family_relationships_student_id ON family_relationships(student_id);
 CREATE INDEX IF NOT EXISTS idx_chat_sessions_user_id ON chat_sessions(user_id);

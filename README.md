@@ -29,7 +29,9 @@ luminia/
 │   │   │   ├── 03_academic_catalog.sql  # countries, institution_types, institutions, campuses, careers, pathways
 │   │   │   ├── 04_indexes.sql           # GIST (espacial), HNSW (vectorial), FKs
 │   │   │   └── 05_seed_reference_data.sql # Semillas base (PE, Universidad, Instituto)
-│   │   └── migrations/                  # Futuras versiones incrementales (v1.1.0, etc.)
+│   │   └── v1.1.0/                      # Gamificación, Retos Diarios y Simulaciones
+│   │       ├── 01_gamification_schema.sql # user_gamification, daily_sparks, daily_spark_responses, user_career_simulations
+│   │       └── 02_seed_daily_sparks.sql # Retos diarios generados por IA (60-90 días) con rotación semanal
 │   ├── config/
 │   │   ├── liquibase.properties.template # Plantilla de variables de conexión
 │   │   └── liquibase.docker.properties
