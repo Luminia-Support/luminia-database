@@ -71,3 +71,12 @@ databaseChangeLog:
   - include:
       file: v1.3.0/04_add_traits_awarded_to_daily_spark_responses.sql
       relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/05_ensure_careers_columns.sql
+      relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/06_outbox_events.sql
+      relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/07_recalculate_gamification_levels.sql
+      relativeToChangelogFile: true

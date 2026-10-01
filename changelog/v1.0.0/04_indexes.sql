@@ -9,6 +9,8 @@ ALTER TABLE institutions ADD COLUMN IF NOT EXISTS country_id INTEGER REFERENCES 
 ALTER TABLE institutions ADD COLUMN IF NOT EXISTS tier_level INTEGER NOT NULL DEFAULT 0;
 
 ALTER TABLE educational_pathways ADD COLUMN IF NOT EXISTS campus_id INTEGER REFERENCES campuses(id);
+ALTER TABLE careers ADD COLUMN IF NOT EXISTS geographic_scope SMALLINT NOT NULL DEFAULT 3;
+ALTER TABLE careers ADD COLUMN IF NOT EXISTS embedding_text TEXT;
 
 CREATE INDEX IF NOT EXISTS idx_family_relationships_parent_id ON family_relationships(parent_id);
 CREATE INDEX IF NOT EXISTS idx_family_relationships_student_id ON family_relationships(student_id);
@@ -19,6 +21,7 @@ CREATE INDEX IF NOT EXISTS idx_campuses_institution_id ON campuses(institution_i
 CREATE INDEX IF NOT EXISTS idx_campuses_location ON campuses USING GIST (location);
 
 CREATE INDEX IF NOT EXISTS idx_careers_embedding_hnsw ON careers USING hnsw(embedding vector_cosine_ops);
+CREATE INDEX IF NOT EXISTS idx_careers_geographic_scope ON careers(geographic_scope);
 
 CREATE INDEX IF NOT EXISTS idx_pathways_career_id ON educational_pathways(career_id);
 CREATE INDEX IF NOT EXISTS idx_pathways_institution_id ON educational_pathways(institution_id);
@@ -27,6 +30,9 @@ CREATE INDEX IF NOT EXISTS idx_pathways_campus_id ON educational_pathways(campus
 --rollback DROP INDEX IF EXISTS idx_pathways_campus_id;
 --rollback DROP INDEX IF EXISTS idx_pathways_institution_id;
 --rollback DROP INDEX IF EXISTS idx_pathways_career_id;
+--rollback DROP INDEX IF EXISTS idx_careers_geographic_scope;
+--rollback ALTER TABLE careers DROP COLUMN IF EXISTS geographic_scope;
+--rollback ALTER TABLE careers DROP COLUMN IF EXISTS embedding_text;
 --rollback DROP INDEX IF EXISTS idx_careers_embedding_hnsw;
 --rollback DROP INDEX IF EXISTS idx_campuses_location;
 --rollback DROP INDEX IF EXISTS idx_campuses_institution_id;
