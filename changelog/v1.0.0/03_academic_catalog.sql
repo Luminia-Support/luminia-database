@@ -41,8 +41,10 @@ CREATE TABLE IF NOT EXISTS careers (
     cip_code VARCHAR(20) UNIQUE,
     name VARCHAR(255) NOT NULL UNIQUE,
     description TEXT,
+    embedding_text TEXT,
     market_demand VARCHAR(50),
     avg_salary_range VARCHAR(100),
+    geographic_scope SMALLINT NOT NULL DEFAULT 3,
     embedding vector(1536)
 );
 
