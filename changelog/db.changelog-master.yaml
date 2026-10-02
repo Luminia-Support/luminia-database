@@ -83,3 +83,6 @@ databaseChangeLog:
   - include:
       file: v1.3.0/08_careers_geographic_scope_index.sql
       relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/09_admin_users_table.sql
+      relativeToChangelogFile: true
