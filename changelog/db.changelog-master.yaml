@@ -86,3 +86,15 @@ databaseChangeLog:
   - include:
       file: v1.3.0/09_admin_users_table.sql
       relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/10_user_deck_sessions_and_theme_tags.sql
+      relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/11_seed_expanded_vocational_swipe_cards.sql
+      relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/12_seed_initial_vocational_swipe_cards.sql
+      relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/13_separate_general_and_thematic_cards.sql
+      relativeToChangelogFile: true
