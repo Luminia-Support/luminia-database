@@ -98,3 +98,21 @@ databaseChangeLog:
   - include:
       file: v1.3.0/13_separate_general_and_thematic_cards.sql
       relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/14_drop_messages_json.sql
+      relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/15_registration_quota_and_verification.sql
+      relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/16_user_subscriptions_mvp.sql
+      relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/17_add_email_verification_config.sql
+      relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/18_mentorship_daily_limit_config.sql
+      relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/19_seed_daily_sparks_2026_2027.sql
+      relativeToChangelogFile: true
