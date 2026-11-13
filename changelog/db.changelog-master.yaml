@@ -116,3 +116,10 @@ databaseChangeLog:
   - include:
       file: v1.3.0/19_seed_daily_sparks_2026_2027.sql
       relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/20_phase1_outbox_and_quota.sql
+      relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/21_scalability_indexes.sql
+      relativeToChangelogFile: true
+
