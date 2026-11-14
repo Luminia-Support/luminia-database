@@ -122,4 +122,10 @@ databaseChangeLog:
   - include:
       file: v1.3.0/21_scalability_indexes.sql
       relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/22_vocational_test_feedback.sql
+      relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/23_vocational_feedback_snooze_and_xp50.sql
+      relativeToChangelogFile: true
 
