@@ -128,4 +128,7 @@ databaseChangeLog:
   - include:
       file: v1.3.0/23_vocational_feedback_snooze_and_xp50.sql
       relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/24_quest_scenario_context_and_deduplication.sql
+      relativeToChangelogFile: true
 
