@@ -131,4 +131,7 @@ databaseChangeLog:
   - include:
       file: v1.3.0/24_quest_scenario_context_and_deduplication.sql
       relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/25_seed_career_mentor_archetypes.sql
+      relativeToChangelogFile: true
 
