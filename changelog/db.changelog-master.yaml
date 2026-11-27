@@ -134,4 +134,10 @@ databaseChangeLog:
   - include:
       file: v1.3.0/25_seed_career_mentor_archetypes.sql
       relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/26_outbox_scalability_and_traits_idempotency.sql
+      relativeToChangelogFile: true
+  - include:
+      file: v1.3.0/27_vocational_feedback_analytics_indexes.sql
+      relativeToChangelogFile: true
 
